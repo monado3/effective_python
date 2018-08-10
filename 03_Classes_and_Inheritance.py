@@ -13,10 +13,12 @@ class SimpleGradebook(object):
         grades = self._grades[name]
         return sum(grades) / len(grades)
 
+
 book = SimpleGradebook()
 book.add_student('Issac Newton')
 book.report_grade('Issac Newton', 90)
 print(book.average_grade('Issac Newton'))
+
 
 class BySubjectGradebook(object):
     def __init__(self):
@@ -38,6 +40,7 @@ class BySubjectGradebook(object):
             count += len(grades)
         return total / count
 
+
 book = BySubjectGradebook()
 book.add_student('Albert Einstein')
 book.report_grade('Albert Einstein', 'Math', 75)
@@ -48,14 +51,17 @@ book.average_grade('Albert Einstein')
 
 # test
 dic = {}
-lis = dic.setdefault('abc',[])
+lis = dic.setdefault('abc', [])
 lis
 dic
-lis = dic.setdefault('abc','aaa')
+lis = dic.setdefault('abc', 'aaa')
 dic
 
 import collections
-Grade = collections.namedtuple('Grade',('score','weight'))
+
+Grade = collections.namedtuple('Grade', ('score', 'weight'))
+
+
 class Subject(object):
     def __init__(self):
         self._grades = []
@@ -69,6 +75,7 @@ class Subject(object):
             total += grade.score * grade.weight
             total_weight += grade.weight
         return total / total_weight
+
 
 class Student(object):
     def __init__(self):
@@ -86,6 +93,7 @@ class Student(object):
             count += 1
         return total / count
 
+
 class Gradebook(object):
     def __init__(self):
         self._students = {}
@@ -94,6 +102,7 @@ class Gradebook(object):
         if name not in self._students:
             self._students[name] = Student()
         return self._students[name]
+
 
 book = Gradebook()
 albert = book.student('Albert Einstein')
@@ -106,12 +115,14 @@ names = ['Socrates', 'Archimedes', 'Plato', 'Aristotle']
 names.sort(key=lambda x: len(x))
 print(names)
 
+
 def log_missing():
     print('Key added')
     return 0
 
-current = {'green':12, 'blue':3}
-increments = [('red',5),
+
+current = {'green': 12, 'blue': 3}
+increments = [('red', 5),
               ('blue', 17),
               ('orange', 9)]
 result = collections.defaultdict(log_missing, current)
@@ -119,6 +130,7 @@ print('Before', dict(result))
 for key, amount in increments:
     result[key] += amount
 print('After: ', dict(result))
+
 
 def increments_with_report(current, increments):
     added_count = 0
@@ -134,8 +146,10 @@ def increments_with_report(current, increments):
 
     return result, added_count
 
+
 result, count = increments_with_report(current, increments)
 assert count == 2
+
 
 class CountMissing(object):
     def __init__(self):
@@ -145,11 +159,13 @@ class CountMissing(object):
         self.added += 1
         return 0
 
+
 counter = CountMissing()
 result = collections.defaultdict(counter.missing, current)
 for key, amount in increments:
     result[key] += amount
 assert counter.added == 2
+
 
 class BetterCountMissing(object):
     def __init__(self):
@@ -158,6 +174,7 @@ class BetterCountMissing(object):
     def __call__(self):
         self.added += 1
         return 0
+
 
 counter = BetterCountMissing()
 assert callable(counter)
